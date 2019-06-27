@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useWeb3 } from './UseWeb3';
+ 
+function MetamaskStatus() {
+    let w3 = useWeb3();
+    let {status} = w3;
+    console.log(w3); // look in your JS console
+
+    let response = ''
+
+    if(status === "NO_WEB3") {
+
+      response = <div>
+          <pre> status = {w3.status}</pre>;
+        </div>;
+    }
+    else if (status === "READY"){
+      response = <div>
+        <p>READY TO GO!</p>
+      </div>
+    }
+
+    if (status === "LOCKED" || status === "NOT_ENABLED"){
+      response = <div>
+          <p>It seems your metamask is not enabaled! </p>
+          <button onClick={()=>w3.enable()}></button>
+        </div> 
+    }
+
+    if (status === ""){
+      
+    }
+    else {
+
+    }
+    
+    
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return <MetamaskStatus />;
 }
 
 export default App;
